@@ -68,58 +68,76 @@ function App() {
 
   return (
     <>
-      <div>
-        <label>
-          Product Name:
-          <input
-            type="text"
-            value={newProduct.name}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, name: e.target.value })
-            }
-          />
-        </label>
-        <label>
-          Product Price:
-          <input
-            type="text"
-            value={newProduct.price}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, price: e.target.value })
-            }
-          />
-        </label>
-        <label>
-          Image URL:
-          <input
-            type="text"
-            value={newProduct.imageUrl}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, imageUrl: e.target.value })
-            }
-          />
-        </label>
-        <label>
-         Description:
-          <input
-            type="text"
-            value={newProduct.description}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, description: e.target.value })
-            }
-          />
-        </label>
-        <button onClick={handleNew}>Add Product</button>
+     <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6">
+          <h2>Add New Product</h2>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="productName" className="form-label">Product Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="productName"
+                value={newProduct.name}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, name: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="productPrice" className="form-label">Product Price:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="productPrice"
+                value={newProduct.price}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, price: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="imageUrl" className="form-label">Image URL:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="imageUrl"
+                value={newProduct.imageUrl}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, imageUrl: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Description:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                value={newProduct.description}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, description: e.target.value })
+                }
+              />
+            </div>
+            <button type="button" className="btn btn-primary" onClick={handleNew}>Add Product</button>
+          </form>
+        </div>
+        <div className="col-md-6">
+          <h2>Product List</h2>
+          <ul className="list-group">
+            {products.map((product) => (
+              <li key={product.id} className="list-group-item">
+                <h3>{product.name}</h3>
+                <p>Price: ${product.price}</p>
+                <img src={product.imageUrl} alt={product.name} className="img-fluid" />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h2>{product.name}</h2>
-            <p>{product.price}</p>
-            <img src={product.imageUrl} alt={product.name} />
-          </li>
-        ))}
-      </ul>
+    </div>
       
     </>
   );

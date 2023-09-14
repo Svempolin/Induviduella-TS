@@ -75,10 +75,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   
 
   return (
-    <div className="card mb-3">
-      <Link className="link" to={`/productsDetails/${product.id}`}>
+    <div className="card mb-3" style={{ objectFit: 'cover', height: '100%', width: '100%' }}>
+      <Link to={`/productsDetails/${product.id}`} className="link">
         <div className="card-img-top">
-          <img src={product.imageUrl} alt={product.name} className="img-fluid" />
+          <img src={product.imageUrl} alt={product.name} className="img-fluid" style={{ objectFit: 'cover', height: '100%', width: '100%' }} />
         </div>
       </Link>
       <div className="card-body">
@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         </div>
       </div>
       <div className="card-footer">
-      <button className="btn btn-success add-to-cart-btn" onClick={() => {
+        <button className="btn btn-success add-to-cart-btn" onClick={() => {
           addToCart(product);
           console.log(`Product added to cart: ${product.name}`);
         }}>
@@ -127,7 +127,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         <button className="btn btn-danger delete-btn me-2" onClick={handleDelete}>
           <FaTrashAlt />
         </button>
-       
       </div>
     </div>
   );

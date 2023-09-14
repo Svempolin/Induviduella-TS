@@ -1,15 +1,14 @@
 import React from 'react';
 import './Hero.modules.css';
-
+import heroImage from '../../assets/placeholders/vinbild.jpg'; // Import the image
 
 const HeroImage: React.FC = () => {
-  const imageUrl = "https://cdn.pixabay.com/photo/2017/03/13/17/26/ecommerce-2140603_1280.jpg";
-  const title = "Welcome to Our Website";
-  const subtitle = "Discover Amazing Products";
+  const title = "Welcome to Nostra Vino";
+  const subtitle = "Discover Amazing Wines";
 
   return (
     <div className="hero-image-container">
-      <img src={imageUrl} alt="Hero" className="hero-image" />
+      <img src={heroImage} alt="Hero" className="hero-image" /> {/* Use the imported image */}
       <div className="hero-text">
         <h1>{title}</h1>
         <p>{subtitle}</p>
