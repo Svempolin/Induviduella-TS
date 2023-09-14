@@ -10,6 +10,7 @@ import { getCart } from './store/product/productListSlice';
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from '@reduxjs/toolkit';
+import HeroImage from './components/Hero/Hero';
 
 function App() {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
@@ -21,6 +22,7 @@ function App() {
   return (
     <Router>
       <Header /> {/* Pass cartValue as a prop to Header */}
+      <HeroImage />
       <Routes>
         <Route path="/" element={<HomeView />} />
         <Route path="/productsDetails/:id" element={<ProductDetails />} />

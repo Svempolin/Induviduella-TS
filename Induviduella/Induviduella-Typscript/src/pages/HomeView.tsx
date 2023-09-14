@@ -5,7 +5,7 @@ import { AnyAction } from 'redux';
 import { getProducts, addToCart as addToCartAction } from '../store/product/productListSlice';
 import ProductCard from '../components/productCard/productCard';
 import { v4 as uuidv4 } from 'uuid';
-import './HomeView.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface Product {
   id: string;
@@ -14,8 +14,6 @@ interface Product {
   imageUrl: string;
   description: string;
 }
-
-
 
 const HomeView: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
@@ -30,31 +28,28 @@ const HomeView: React.FC = () => {
   );
 
   const addToCart = (product: Product) => {
-    const cartItem: any= {
+    const cartItem: any = {
       cartItemId: uuidv4(), // Generate a unique identifier
       product,
       quantity: 1, // You can set the initial quantity to 1 or any other value
     };
     dispatch(addToCartAction(cartItem)); // Dispatch the addToCart action with the cart item
   };
-  
 
   return (
-    <div className="products_container">
-      <h2 className="products-title">All our products</h2>
+    <div className="container">
+      <h2 className="mt-4 mb-3">All our products</h2>
 
-      <div className="products-collection">
+      <div className="row">
         {products.map((product: Product) => (
-         <ProductCard
-         key={product.id}
-         product={product}
-         imageUrl={product.imageUrl}
-         addToCart={() => addToCart(product)}
-         
-       />
-       
+          <div className="col-md-4 mb-4" key={product.id}>
+            <ProductCard
+              product={product}
+              imageUrl={product.imageUrl}
+              addToCart={() => addToCart(product)}
+            />
+          </div>
         ))}
-
       </div>
     </div>
   );

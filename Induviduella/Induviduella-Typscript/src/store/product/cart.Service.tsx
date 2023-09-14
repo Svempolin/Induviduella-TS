@@ -26,7 +26,8 @@ const getCart = async (): Promise<CartItem[]> => {
   console.log("query",querySnapshot);
   const cart: CartItem[] = [];
   querySnapshot.forEach((doc) => {
-    cart.push({ cartItemId: doc.id, ...doc.data() } as CartItem);
+    console.log("doc",doc.ref.id);
+    cart.push({...doc.data(), cartItemId: doc.ref.id } as CartItem);
   });
 
   return cart;

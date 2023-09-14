@@ -4,27 +4,23 @@ import "./Footer.css"
 
 function Footer() {
   return (
-    <footer>
-      <div className='footer'>
-        <div style={{ marginLeft: 20 }}>
-          <h4 className='fw-600'>Nice food</h4>
+    <footer className="bg-dark text-light py-4">
+    <div className="container">
+      <div className="row">
+        <div className="col-md-4">
+          <h4 className="fw-600">Nice food</h4>
         </div>
-        <div className='about-us'>
-          <div>
-            <h4 className='fw-600'>About us</h4>
-          </div>
-          <div>
-            <h4 className='fw-600'>T&C</h4>
-          </div>
-          <div>
-            <h4 className='fw-600'>Privacy policy</h4>
-          </div>
-          <div>
-            <h4 className='fw-600'>Contact us</h4>
+        <div className="col-md-4">
+          <div className="about-us">
+            <h4 className="fw-600">About us</h4>
+            <h4 className="fw-600">T&C</h4>
+            <h4 className="fw-600">Privacy policy</h4>
+            <h4 className="fw-600">Contact us</h4>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
   );
 }
 

@@ -7,6 +7,9 @@ import { deleteProduct, updateProduct, addToCart } from '../../store/product/pro
 import { Link } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 
 interface Product {
@@ -72,61 +75,59 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   
 
   return (
-    <div className="product_item">
-      <div className="left_box">
-        <Link className="link" to={`/productsDetails/${product.id}`}>
-          <div className="product_img">
-          <img src={product.imageUrl} alt={product.name} />
-          </div>
-        </Link>
-        <div className="product-name">
+    <div className="card mb-3">
+      <Link className="link" to={`/productsDetails/${product.id}`}>
+        <div className="card-img-top">
+          <img src={product.imageUrl} alt={product.name} className="img-fluid" />
+        </div>
+      </Link>
+      <div className="card-body">
+        {isEditing ? (
+          <input
+            type="text"
+            value={editedName}
+            onChange={handleNameChange}
+            className="form-control"
+          />
+        ) : (
+          <h5 className="card-title">{product.name}</h5>
+        )}
+        {isEditing ? (
+          <textarea
+            value={editedDescription}
+            onChange={handleDescriptionChange}
+            className="form-control"
+          />
+        ) : (
+          <p className="card-text">{truncateDescription(product.description, 50)}</p>
+        )}
+        <div className="card-price">
           {isEditing ? (
             <input
-              type="text"
-              value={editedName}
-              onChange={handleNameChange}
+              type="number"
+              value={editedPrice}
+              onChange={handlePriceChange}
+              className="form-control"
             />
           ) : (
-            <h5>{product.name}</h5>
+            <span>{product.price} kr</span>
           )}
         </div>
       </div>
-      <div className="right_box">
-        <div className="product-description">
-          {isEditing ? (
-            <textarea
-              value={editedDescription}
-              onChange={handleDescriptionChange}
-            />
-          ) : (
-            <p>{truncateDescription(product.description, 50)}</p>
-          )}
-          <div className="product-price">
-            {isEditing ? (
-              <input
-                type="number"
-                value={editedPrice}
-                onChange={handlePriceChange}
-              />
-            ) : (
-              <span>{product.price} kr</span>
-            )}
-          </div>
-        </div>
-        <div className="productList-btns">
-          <button className="edit-btn" onClick={handleEdit}>
-            {isEditing ? <FaCheck /> : <MdModeEdit />}
-          </button>
-          <button className="delete-btn" onClick={handleDelete}>
-            <FaTrashAlt />
-          </button>
-          <button className="add-to-cart-btn" onClick={() => {
-      addToCart(product);
-        console.log(`Product added to cart: ${product.name}`);
+      <div className="card-footer">
+      <button className="btn btn-success add-to-cart-btn" onClick={() => {
+          addToCart(product);
+          console.log(`Product added to cart: ${product.name}`);
         }}>
-  Add to Cart
-</button> {/* Call addToCart with the product */}
-        </div>
+          Add to Cart
+        </button>
+        <button className="btn btn-primary edit-btn me-3" onClick={handleEdit}>
+          {isEditing ? <FaCheck /> : <MdModeEdit />}
+        </button>
+        <button className="btn btn-danger delete-btn me-2" onClick={handleDelete}>
+          <FaTrashAlt />
+        </button>
+       
       </div>
     </div>
   );

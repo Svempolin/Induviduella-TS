@@ -1,0 +1,21 @@
+/* Headers.module.css or a separate CSS file */
+.hero-image-container {
+  text-align: center; /* Center-align the child elements */
+  background-color: rgba(0, 0, 0, 0.7); /* Add a background color for better readability */
+  padding: 20px;
+ 
+  color: white;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+}
+
+.hero-text {
+  margin-top: 20px; /* Add space between the image and text */
+}
+
+.center-content {
+  text-align: center; /* Center-align the text inside .center-content */
+}

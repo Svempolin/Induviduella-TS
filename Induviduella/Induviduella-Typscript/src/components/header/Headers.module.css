@@ -1,12 +1,38 @@
 /* Header Styles */
 header {
-  max-width: 1224px;
+max-width: 100%;
   margin: 0 auto;
   padding: 2rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+/* Headers.module.css or a separate CSS file */
+.hero-image-container {
+  position: relative;
+  text-align: center; /* Center-align the child elements */
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center both vertically and horizontally */
+  background-color: rgba(0, 0, 0, 0.7); /* Add a background color for better readability */
+  padding: 20px;
+  border-radius: 10px;
+ color:black
+}
+
+.center-content {
+  text-align: center; /* Center-align the text inside .center-content */
+}
+
 
 .nav_container {
   display: flex;

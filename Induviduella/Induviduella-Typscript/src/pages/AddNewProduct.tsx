@@ -8,6 +8,8 @@ import {
   Unsubscribe,
 } from 'firebase/firestore'; // Ändra '@firebase/firestore' beroende på hur din firestore är installerad
 import {db} from '../firebase/firebaseConfig'; // Justera sökvägen till firebaseConfig.js
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 

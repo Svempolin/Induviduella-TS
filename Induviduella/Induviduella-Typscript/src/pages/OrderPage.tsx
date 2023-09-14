@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, modifyCartItemQuantity } from '../store/product/productListSlice';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const OrderPage: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
@@ -34,34 +37,50 @@ const OrderPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Your Orders</h2>
-      <ul>
-        {cart.map((cartItem) => (
-          <li key={cartItem.cartItemId}>
-            <div>
-              {cartItem.product && (
-                <img src={cartItem.product.imageUrl} alt={cartItem.product.name} style={{ width: '100px', height: '100px' }} />
-              )}
-            </div>
-            <div>
-              {cartItem.product ? (
-                <>
-                  {cartItem.product.name} - {cartItem.product.price} kr
-                  <div>
-                  <button onClick={() => modifyQuantity(cartItem.cartItemId,1)}>+</button>
-                 {cartItem.quantity}
-                  <button onClick={() => modifyQuantity(cartItem.cartItemId,-1)}>-</button>
-                  </div>
-                </>
-              ) : (
-                <span>Product not available</span>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+<div>
+  <h2 className="mt-4 mb-3">Your Orders</h2>
+  <ul className="list-group">
+    {cart.map((cartItem) => (
+      <li key={cartItem.cartItemId} className="list-group-item">
+        <div>
+          {cartItem.product && (
+            <img
+              src={cartItem.product.imageUrl}
+              alt={cartItem.product.name}
+              style={{ width: '100px', height: '100px' }}
+              className="cart-item-img"
+            />
+          )}
+        </div>
+        <div>
+          {cartItem.product ? (
+            <>
+              <h5 className="cart-item-name">{cartItem.product.name}</h5>
+              <span className="cart-item-price">- {cartItem.product.price} kr</span>
+              <div className="cart-item-quantity">
+                <button
+                  onClick={() => modifyQuantity(cartItem.cartItemId, 1)}
+                  className="btn btn-success btn-sm"
+                >
+                  +
+                </button>
+                {cartItem.quantity}
+                <button
+                  onClick={() => modifyQuantity(cartItem.cartItemId, -1)}
+                  className="btn btn-danger btn-sm"
+                >
+                  -
+                </button>
+              </div>
+            </>
+          ) : (
+            <span>Product not available</span>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
   );
 };
 
