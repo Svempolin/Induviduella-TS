@@ -9,14 +9,7 @@ import {
 } from 'firebase/firestore';
 import{db} from '../../firebase/firebaseConfig'; // Justera sökvägen till firebaseConfig.js
 
-interface ProductData {
-  id: string;
-  name: string;
-  price: number;
-  imageURL: string;
-  description: string;
-  // Lägg till andra attribut för produkten här
-}
+
 
 const createProduct = async (productData: Omit<ProductData, 'id'>): Promise<ProductData> => {
   const collectionRef = collection(db, 'products');

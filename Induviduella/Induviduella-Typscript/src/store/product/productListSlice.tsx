@@ -1,19 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import productService from "./products.Service";
+import cartService from './cart.Service';
 
-interface Product {
-  id: string;
-  name: string;
-  cart: Product[];
-  error: string | null;
-  loading: boolean;
-  // Unique identifier
-}
-interface CartItem {
-  cartItemId: string; // Unique identifier
-  product: Product; // Product data
-  quantity: number; // Quantity of this product in the cart
-}
+
 
 interface ProductListState {
   products: Product[];
@@ -29,12 +18,35 @@ const initialState: ProductListState = {
   loading: false,
 };
 
+export const getCart = createAsyncThunk(
+  'product-list/getCart',
+  async (_, thunkAPI) => {
+    try {
+      return await cartService.getCart();
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err instanceof Error ? err.message : 'Unknown error');
+    }
+  }
+);
+
 export const addToCart = createAsyncThunk(
   'product-list/addToCart',
-  async (productData: any, thunkAPI) => {
+  async (cartItem: any, thunkAPI) => {
     try {
       // You can add custom logic here if needed
-      return productData;
+      return await cartService.addToCart(cartItem);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err instanceof Error ? err.message : 'Unknown error');
+    }
+  }
+);
+
+export const modifyCartItemQuantity = createAsyncThunk(
+  'product-list/modifyCartItemQuantity',
+  async (cartItem: any, thunkAPI) => {
+    try {
+      // You can add custom logic here if needed
+      return await cartService.updateCartItem(cartItem);
     } catch (err) {
       return thunkAPI.rejectWithValue(err instanceof Error ? err.message : 'Unknown error');
     }
@@ -46,7 +58,7 @@ export const removeFromCart = createAsyncThunk(
   async (productId: string, thunkAPI) => {
     try {
       // You can add custom logic here if needed
-      return productId;
+      return await cartService.removeFromCart(productId);
     } catch (err) {
       return thunkAPI.rejectWithValue(err instanceof Error ? err.message : 'Unknown error');
     }
@@ -58,7 +70,7 @@ export const clearCart = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       // You can add custom logic here if needed
-      return null;
+      return await cartService.clearCart();
     } catch (err) {
       return thunkAPI.rejectWithValue(err instanceof Error ? err.message : 'Unknown error');
     }
@@ -136,14 +148,7 @@ const productListSlice = createSlice({
       .addCase(getProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.products = action.payload.map((productData) => ({
-          id: productData.id,
-          name: productData.name,
-          cart: [], // You may need to provide an initial value for these properties
-          error: null,
-          loading: false,
-          // Add other properties as needed
-        }));
+        state.products = action.payload;
       })
       
       .addCase(getProducts.rejected, (state, action) => {
@@ -178,16 +183,42 @@ const productListSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'An error occurred';
       })
+      .addCase(getCart.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.cart = action.payload;
+      })
+      .addCase(getCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'An error occurred';
+      })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.cart.push(action.payload);
       })
-    .addCase(removeFromCart.fulfilled, (state, action) => {
-  state.loading = false;
-  state.error = null;
-  state.cart = state.cart.filter((cartItem) => cartItem.cartItemId !== action.payload);
-})
+      .addCase(modifyCartItemQuantity.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(modifyCartItemQuantity.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.cart = state.cart.map((cartItem) =>
+          cartItem.cartItemId === action.payload.cartItemId ? action.payload : cartItem
+        );
+      })
+      .addCase(modifyCartItemQuantity.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'An error occurred';
+      })
+      .addCase(removeFromCart.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.cart = state.cart.filter((cartItem) => cartItem.cartItemId !== action.payload);
+    })
 
       .addCase(clearCart.fulfilled, (state) => {
         state.loading = false;

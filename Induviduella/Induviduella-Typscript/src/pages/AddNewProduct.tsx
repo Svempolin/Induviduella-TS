@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   onSnapshot,
   collection,
@@ -6,23 +6,24 @@ import {
   QueryDocumentSnapshot,
   addDoc,
   Unsubscribe,
-} from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
-import { Product } from '../interface/Interface';
-import './AddProduct.css';
+} from 'firebase/firestore'; // Ändra '@firebase/firestore' beroende på hur din firestore är installerad
+import {db} from '../firebase/firebaseConfig'; // Justera sökvägen till firebaseConfig.js
 
-function AddProduct() {
+
+
+function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: '',
     imageUrl: '',
-    description: '',
+    description: "",
   });
 
   useEffect(() => {
     let unsubscribe: Unsubscribe | undefined;
 
+    // Använd onSnapshot för att prenumerera på ändringar och lagra unsubscribe-funktionen
     unsubscribe = onSnapshot(collection(db, 'products'), (snapshot) => {
       const productData: Product[] = snapshot.docs.map(
         (doc: QueryDocumentSnapshot<DocumentData>) => {
@@ -37,36 +38,35 @@ function AddProduct() {
         }
       );
 
+      // Uppdatera produkter när data ändras
       setProducts(productData);
     });
 
+    // Cleanup the subscription when the component unmounts
     return () => {
       if (unsubscribe) {
         unsubscribe();
       }
     };
-  }, [db]);
+  }, [db]); // Lägg till db i beroendediagrammet om det används
 
   const handleNew = async () => {
-    if (
-      newProduct.name &&
-      newProduct.price &&
-      newProduct.imageUrl &&
-      newProduct.description
-    ) {
+    if (newProduct.name && newProduct.price && newProduct.imageUrl && newProduct.description) {
       const payload = { ...newProduct };
 
+      // Lägg till det nya produktobjektet i Firestore
       await addDoc(collection(db, 'products'), payload);
 
+      // Rensa inputfälten efter att produkten lagts till
       setNewProduct({ name: '', price: '', imageUrl: '', description: '' });
-    } else {
+    } else { 
       alert('Please fill in all fields.');
     }
   };
 
   return (
-    <div className="add-product-container">
-      <div className="add-product-form">
+    <>
+      <div>
         <label>
           Product Name:
           <input
@@ -98,7 +98,7 @@ function AddProduct() {
           />
         </label>
         <label>
-          Description:
+         Description:
           <input
             type="text"
             value={newProduct.description}
@@ -109,23 +109,18 @@ function AddProduct() {
         </label>
         <button onClick={handleNew}>Add Product</button>
       </div>
-      <ul className="product-list">
+      <ul>
         {products.map((product) => (
-          <li key={product.id} className="product-item">
+          <li key={product.id}>
             <h2>{product.name}</h2>
             <p>{product.price}</p>
-            <div className="product-image-wrapper">
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="product-image"
-              />
-            </div>
+            <img src={product.imageUrl} alt={product.name} />
           </li>
         ))}
       </ul>
-    </div>
+      
+    </>
   );
 }
 
-export default AddProduct;
+export default App;

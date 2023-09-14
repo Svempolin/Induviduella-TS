@@ -1,30 +1,36 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, addToCart } from '../store/product/productListSlice';
-import { Product } from '../interface/Interface';
+import { removeFromCart, modifyCartItemQuantity } from '../store/product/productListSlice';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
 const OrderPage: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
-  const cart = useSelector((state: { productList: { cart: Product[] } }) => state.productList.cart);
-  console.log(cart);
+  const cart = useSelector((state: { productList: { cart: CartItem[] } }) => state.productList.cart);
 
   const handleRemoveFromCart = async (cartItemId: string) => {
     try {
-      await dispatch(removeFromCart(cartItemId));
-      // Thunk action completed successfully
+      dispatch(removeFromCart(cartItemId));
     } catch (error) {
       // Handle errors if needed
     }
   };
 
-  const handleIncrement = (product: Product) => {
-    try {
-      dispatch(addToCart(product));
-    } catch (error) {
-      // Handle errors if needed
-    }
+  const modifyQuantity = (cartItemId: string, modifier: number) => {
+    const cartItem = cart.find((item) => item.cartItemId === cartItemId);
+    if (cartItem) {
+      const newQuantity = cartItem.quantity + modifier;
+      if (newQuantity > 0) {
+        const updatedCartItem = { ...cartItem, quantity: newQuantity };
+        try {
+          dispatch(modifyCartItemQuantity(updatedCartItem));
+        } catch (error) {
+          // Handle errors if needed
+        }
+      } else {
+        handleRemoveFromCart(cartItemId);
+      }
+  }
   };
 
   return (
@@ -43,9 +49,9 @@ const OrderPage: React.FC = () => {
                 <>
                   {cartItem.product.name} - {cartItem.product.price} kr
                   <div>
-                    <button onClick={() => handleIncrement(cartItem.cartItemId)}>+</button>
-                    {cartItem.quantity}
-                    <button onClick={() => handleRemoveFromCart(cartItem.cartItemId)}>-</button>
+                  <button onClick={() => modifyQuantity(cartItem.cartItemId,1)}>+</button>
+                 {cartItem.quantity}
+                  <button onClick={() => modifyQuantity(cartItem.cartItemId,-1)}>-</button>
                   </div>
                 </>
               ) : (

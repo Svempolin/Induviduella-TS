@@ -2,19 +2,15 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import styles from './Headers.module.css';
-import { Product } from '../../interface/Interface';
 import logo from '../../assets/placeholders/Logo.png';
+import { useSelector } from 'react-redux';
 
-interface HeaderProps {
-  cart: Product[]; 
-  cartValue: number
-  setCartValue: (value: number) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ cart }) => {
+const Header: React.FC = () => {
   // Function to check if a product is in the cart
-  const isProductInCart = (productId: string) => {
-    return cart.some((product) => product.id === productId);
+  const cart = useSelector((state: { productList: { cart: CartItem[] } }) => state.productList.cart);
+  console.log("CART",cart);
+  const isProductInCart = (cartItemId: string) => {
+    return cart.some((cartItem) => cartItem.cartItemId === cartItemId);
   };
 
   return (

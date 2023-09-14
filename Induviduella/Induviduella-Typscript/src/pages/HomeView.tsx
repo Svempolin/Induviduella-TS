@@ -15,11 +15,9 @@ interface Product {
   description: string;
 }
 
-interface HomeViewProps {
-  addToCart: (product: Product) => void;
-}
 
-const HomeView: React.FC<HomeViewProps> = () => {
+
+const HomeView: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
   useEffect(() => {
