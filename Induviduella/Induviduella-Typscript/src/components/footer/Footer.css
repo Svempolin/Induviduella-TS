@@ -1,0 +1,18 @@
+.footer {
+  min-width: 60px;
+  background-color: rgb(203, 189, 167);
+  display: flex;
+  justify-content: space-between;
+  padding-top: 17px;
+}
+
+.about-us {
+
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+}
+
+.fw-600 {
+  font-weight: 600;
+}

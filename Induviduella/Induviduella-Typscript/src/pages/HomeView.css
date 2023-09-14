@@ -1,0 +1,95 @@
+.products_container {
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.products_container .products-title {
+  margin-bottom: 2rem;
+}
+
+.product_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid lightgray;
+  width: 80vw;
+  height: 15vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+.product_item .left_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.product_item .left_box img {
+  width: 60px;
+  height: 60px;
+  margin-right: 2rem;
+}
+.product_item .left_box img:hover {
+  transform: scale(2.2);
+  transition: all 0.3s ease-in-out;
+}
+.product_item .left_box .product-name {
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+.product_item .left_box a {
+  text-decoration: none;
+  color: black;
+}
+.product_item .right_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.product_item .right_box .product-description {
+  text-align: left;
+  width: 200px;
+  margin-right: 1rem;
+}
+.product_item .right_box .product-price {
+  font-weight: 700;
+  text-align: left;
+  width: 70px;
+}
+.product_item .right_box .productList-btns {
+  display: flex;
+  align-items: end;
+  margin-left: 2rem;
+}
+.product_item .right_box .productList-btns .edit-btn {
+  font-size: 1.2rem;
+  padding-left: 0.5rem;
+  border: none;
+  background-color: transparent;
+  color: black;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.product_item .right_box .productList-btns .edit-btn:hover {
+  color: green;
+}
+.product_item .right_box .productList-btns .delete-btn {
+  font-size: 1.2rem;
+  padding-left: 0.5rem;
+  border: none;
+  background-color: transparent;
+  color: black;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.product_item .right_box .productList-btns .delete-btn:hover {
+  color: red;
+}
+
+.product_item:hover {
+  background-color: #EFEFEF;
+  padding-right: 3rem;
+}/*# sourceMappingURL=Products.module.css.map */

@@ -1,0 +1,64 @@
+/* Header Styles */
+header {
+  max-width: 1224px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav_container {
+  display: flex;
+  align-items: center;
+}
+
+.nav_links_div {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+/* Navigation List Styles */
+ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+li {
+  font-size: 1rem;
+  margin: 0 5px;
+}
+
+a {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Navigation Link Hover Effect */
+li a:hover {
+  color: red;
+}
+
+/* Logo Styles */
+.logo {
+  width: 20%;
+}
+
+/* Shopping Cart Styles */
+.cart_container{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-image {
+  width: 100px;
+}
+.alignLeft {
+  margin-left: auto;
+}
